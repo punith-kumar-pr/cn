@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct packet
+{
+    int time;
+    int size;
+}p[50];
+
+int main()
+{
+    int n,i,k,m, bfilled, bsize, outrate;
+    cout<<"Enter the no. of packet\n";
+    cin>>n;
+    cout<<"Enter the packets in the order of their arrival time\n";
+    cout<<"Enter time and packet size\n";
+    for(i=0;i<n;i++)
+    {
+        cin>>p[i].time>>p[i].size;
+    }
+    cout<<"Enter bucket size\n";
+    cin>>bsize;
+    cout<<"Enter the outrate\n";
+    cin>>outrate;
+    i=1;
+    k=0;
+    m=p[n-1].time;
+    
+    while(i<=m || bfilled!=0)
+    {
+        if(i==p[k].time)
+        {
+            if(bsize>=bfilled+p[k].size)
+            {
+                bfilled+=p[k].size;
+                cout<<p[k].size<<" inserted\n";
+                k++;
+            }
+            else
+            {
+                cout<<p[k].size<<" discarded\n";
+                k++;
+            }
+        }
+        if(bfilled==0)
+        {
+            cout<<"No packets transferred\n";
+        }
+        else if(bfilled>=outrate)
+        {
+            cout<<outrate<<" transferred\n";
+            bfilled-=outrate;
+        }
+        else
+        {
+            cout<<bfilled<< "transferred\n";
+            bfilled=0;
+        }
+        i++;
+    }//while
+    return 0;
+}
